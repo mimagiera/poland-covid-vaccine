@@ -1,0 +1,24 @@
+Below presented results of tests getting tweets by different hashtags
+
+CovidVaccine                    <--- done 19
+pfizer                          <--- done 66
+SzczepionkaNarodowa             <--- done 1
+programszczepien                <--- done 1
+szczepienia                     <--- done 186
+NieSzczepimySię                 <--- done 76
+PfizerVaccine                   <--- done 2
+AstraZeneca                     <--- done
+szczepionkiprzeciwCOVID19       <--- done 1
+szczepionkiAstraZeneca          <--- done 1
+szczepionkę                     <--- done 4
+NarodowyProgramSzczepien        <--- done 41
+Szczepionka                     <--- done 232
+narodowyprogramszczepien        <--- done 41
+szczepionka                     <--- done 232
+szczepionką                     <--- done 232
+COVIDVaccine                    <--- done 19
+krotkiodstepmiedzydawkami       <--- done 1
+COVID19Vaccine                  <--- done 6
+szczepimysię                    <--- done 740
+Szczepień                       <--- done 10
+moderna                         <--- done 27
