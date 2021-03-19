@@ -10,3 +10,7 @@ twitter_keys = {
     'access_token_secret': '--'
 }
 ```
+
+# Useful links
+https://towardsdatascience.com/tweepy-for-beginners-24baf21f2c25
+https://www.earthdatascience.org/courses/use-data-open-source-python/intro-to-apis/twitter-data-in-python/
