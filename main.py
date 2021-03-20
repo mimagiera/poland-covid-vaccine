@@ -1,3 +1,5 @@
+import json
+
 import tweepy as tw
 
 from twitter_creds import twitter_keys
@@ -19,5 +21,5 @@ tweets = tw.Cursor(api.search,
                    tweet_mode='extended').items(5000)
 
 for t in tweets:
-    with open("search_results_"+hash_tag+".json", "a", encoding="utf-8") as file:
-        file.write(str(t._json) + "\n")
+    with open("search_results_" + hash_tag + ".json", "a", encoding="utf-8") as file:
+        file.write(json.dumps(t._json) + "\n")
