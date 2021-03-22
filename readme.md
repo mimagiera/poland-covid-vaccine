@@ -1,15 +1,9 @@
-# Legacy dev instruction
+# Instruction
 
-Create file `twitter_creds.py` with the following content:
+1. Download data from https://www.dropbox.com/s/utktr1hrre75w73/data_from_scrap.zip?dl=0
+2. Extract it to main directory in repo
+3. Run `import_old_data()` from [mongo_import](mongo_import.py) ti import data to mongodb
 
-```
-twitter_keys = {
-    'consumer_key': '--',
-    'consumer_secret': '--',
-    'access_token_key': '--',
-    'access_token_secret': '--'
-}
-```
 
 # Useful links
 https://towardsdatascience.com/tweepy-for-beginners-24baf21f2c25
