@@ -1,42 +1,35 @@
 import ast
+import glob
 import json
 from os import walk
 
 import pymongo
+from pymongo import bulk
 
 DB_CONN_STRING = "mongodb://localhost:27017/"
 
 DB_NAME = "poland-covid-vaccine-tweets"
 COLLECTION_NAME = "tweets"
 
-debug = True
-
 
 def import_old_data():
     mongo_client = pymongo.MongoClient(DB_CONN_STRING)
     database_name = mongo_client[DB_NAME]
     old_data_col = database_name[COLLECTION_NAME]
-    dir_name = "data/20210319_2100"
-    _, _, filenames = next(walk("%s" % dir_name))
+    bulk_builder = pymongo.bulk.BulkOperationBuilder(old_data_col, ordered=False)
+    for filename in glob.iglob("data_from_scrap" + '**/**', recursive=True):
+        if filename.endswith(".json"):
+            with open(filename) as file_to_import:
+                for jsonObj in file_to_import:
+                    tweet_json = json.loads(jsonObj)
+                    # '_id' is used as document id in mongo
+                    # Without this conversion each document would have new ObjectId as id
+                    tweet_json["_id"] = tweet_json.pop("id")
+                    bulk_builder.insert(tweet_json)
 
-    for file_name_inside in filenames:
-        file_name = f"{dir_name}/{file_name_inside}"
-        with open(file_name) as file_to_import:
-            tweets_from_file = []
-            for jsonObj in file_to_import:
-                tweet_json = json.loads(jsonObj)
-                # '_id' is used as document id in mongo
-                # Without this conversion each document would have new ObjectId as id
-                tweet_json["_id"] = tweet_json.pop("id")
-                tweets_from_file.append(tweet_json)
-            try:
-                insert_result = old_data_col.insert_many(tweets_from_file)
-                if debug:
-                    print(f"Inserted ids from file {file_name}: {insert_result.inserted_ids}")
-            except Exception as e:
-                print(f"Error inserting data from file {file_name}: {e}")
-
-        mongo_client.close()
+    response = bulk_builder.execute()
+    print("Finished inserting")
+    mongo_client.close()
 
 
 import_old_data()
