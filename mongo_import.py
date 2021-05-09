@@ -6,16 +6,13 @@ from os import walk
 import pymongo
 from pymongo import bulk
 
-DB_CONN_STRING = "mongodb://localhost:27017/"
-
-DB_NAME = "poland-covid-vaccine-tweets"
-COLLECTION_NAME = "tweets"
+from consts import *
 
 
 def import_old_data():
     mongo_client = pymongo.MongoClient(DB_CONN_STRING)
     database_name = mongo_client[DB_NAME]
-    old_data_col = database_name[COLLECTION_NAME]
+    old_data_col = database_name[COLLECTION_NAME_TWEETS]
     bulk_builder = pymongo.bulk.BulkOperationBuilder(old_data_col, ordered=False)
     for filename in glob.iglob("data_from_scrap" + '**/**', recursive=True):
         if filename.endswith(".json"):
