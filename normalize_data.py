@@ -57,6 +57,8 @@ def fix_nested_users(tweet_with_mentioned_users):
         for user_to_change in users:
             if type(user_to_change) is dict:
                 user_to_change['_id'] = user_to_change.pop('id')
+                for key_to_remove in keys_to_remove_from_user:
+                    user_to_change.pop(key_to_remove, None)
                 bulk_builder.insert(user_to_change)
                 user_ids.append(user_to_change['_id'])
         if len(user_ids) > 0:
