@@ -5,9 +5,12 @@ from os import walk
 
 import pymongo
 from pymongo import bulk
+from pymongo.errors import DuplicateKeyError
 
 from consts import *
 
+is_conversation_downloaded = True
+is_covid_topic = False
 
 def import_old_data():
     mongo_client = pymongo.MongoClient(DB_CONN_STRING)
@@ -15,6 +18,7 @@ def import_old_data():
     old_data_col = database_name[COLLECTION_NAME_TWEETS]
     bulk_builder = pymongo.bulk.BulkOperationBuilder(old_data_col, ordered=False)
     for filename in glob.iglob("data_from_scrap" + '**/**', recursive=True):
+        print(filename)
         if filename.endswith(".json"):
             with open(filename) as file_to_import:
                 for jsonObj in file_to_import:
@@ -22,9 +26,13 @@ def import_old_data():
                     # '_id' is used as document id in mongo
                     # Without this conversion each document would have new ObjectId as id
                     tweet_json["_id"] = tweet_json.pop("id")
-                    bulk_builder.insert(tweet_json)
+                    tweet_json["covid_topic"] = is_covid_topic
+                    tweet_json["conversation_downloaded"] = is_conversation_downloaded
+                    try:
+                        old_data_col.insert_one(tweet_json)
+                    except DuplicateKeyError as e:
+                        pass
 
-    response = bulk_builder.execute()
     print("Finished inserting")
     mongo_client.close()
 
