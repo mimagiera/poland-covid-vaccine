@@ -1,8 +1,10 @@
 # Instruction
 
-1. Download data from https://www.dropbox.com/s/utktr1hrre75w73/data_from_scrap.zip?dl=0
-2. Extract it to main directory in repo
-3. Run `import_old_data()` from [mongo_import](mongo_import.py) ti import data to mongodb
+1. Install mongodb
+2.  Download data from https://drive.google.com/file/d/1QngH_we9xsM08WilahQ37Z_xdF1VXPV4/view?usp=sharing
+3. Run to import data to mongo:
+  - `mongoimport  -d poland-covid-vaccine-tweets -c users --file users.json`
+  - `mongoimport  -d poland-covid-vaccine-tweets -c tweets --file tweets.json`
 
 
 # Useful links
