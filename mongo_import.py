@@ -12,6 +12,7 @@ from consts import *
 is_conversation_downloaded = True
 is_covid_topic = False
 
+
 def import_old_data():
     mongo_client = pymongo.MongoClient(DB_CONN_STRING)
     database_name = mongo_client[DB_NAME]
